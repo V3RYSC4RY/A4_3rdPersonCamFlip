@@ -1,3 +1,7 @@
+# Abandoned; I refunded the game and will no longer be working on this. Fork if you want to.
+
+# ANEURISM IV's EULA means modding is not allowed. Unless they like you; then you can mod the game. But only if it's mods they like. This at-will retroactive EULA is bullshit and breaks Australian Consumer Law and I don't plan to deal with it.
+
 ## Requirements:
 
 ### Install BepInExPack_IL2CPP from Thunderstore
