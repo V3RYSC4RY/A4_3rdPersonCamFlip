@@ -10,8 +10,6 @@ Plugin package version: `0.0.1-alpha.1`
 - `src/3rdPersonCamFlip/` - active mod source.
 - `versions/alpha/0.01/` - snapshot of the old `ThirdPersonCamFix - 0.0.4` source, now treated as the first alpha prototype.
 - `versions/pre-alpha/` - predecessor snapshots from before alpha 0.01.
-- `libs/` - local BepInEx, Unity, and game assemblies used for compiling. This folder is ignored by git.
-- `bin/` - build output. This folder is ignored by git.
 
 ## Build
 
