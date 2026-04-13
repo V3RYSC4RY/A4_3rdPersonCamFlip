@@ -2,10 +2,14 @@
 
 ANEURISM IV BepInEx IL2CPP mod for flipping the third-person camera shoulder.
 
-Current active version: **alpha 0.01**  
-Plugin package version: `0.0.1-alpha.1`
+### Default keybind: 
+SwapKey = **C**
 
-## Source code version history layout
+## Version:
+
+Current active version: **alpha 0.01** (First release)
+
+## Source history:
 
 - `src/3rdPersonCamFlip/` - active mod source.
 - `versions/alpha/0.01/` - snapshot of the old `ThirdPersonCamFix - 0.0.4` source, now treated as the first alpha prototype.
