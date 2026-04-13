@@ -6,5 +6,9 @@ libs/*
 *.user
 *.suo
 
+# Local assistant/project context; do not publish.
+context.md
+.codex/
+
 # Temporarily remove assets until it is ready to go.
 assets/
