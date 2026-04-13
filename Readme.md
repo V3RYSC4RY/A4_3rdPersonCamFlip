@@ -24,24 +24,3 @@ The compiled mod will be written to:
 ```text
 bin/3rdPersonCamFlip/3rdPersonCamFlip.dll
 ```
-
-`update_3rdpersoncamflip.ps1` builds the active project and copies the DLL into the local ANEURISM IV BepInEx plugins folder.
-
-## Version Archive
-
-The active project is the one under `src/3rdPersonCamFlip/`.
-
-Older source snapshots should stay under `versions/` using this convention:
-
-```text
-versions/
-  alpha/
-    0.01/
-  pre-alpha/
-    0.0.2/
-    0.0.3/
-    broken-1/
-    broken-2/
-```
-
-When making a new release, copy the active source into a new folder under `versions/alpha/` or a later release channel before continuing work.
