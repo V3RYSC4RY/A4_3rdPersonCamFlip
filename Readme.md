@@ -1,58 +1,49 @@
-# Abandoned; I refunded the game and will no longer be working on this. Fork if you want to.
+# 3rdPersonCamFlip
 
-# ANEURISM IV's EULA means modding is not allowed. Unless they like you; then you can mod the game. But only if it's mods they like. This at-will retroactive EULA is bullshit and breaks Australian Consumer Law and I don't plan to deal with it.
+ANEURISM IV BepInEx IL2CPP mod for flipping the third-person camera shoulder.
 
-## Requirements:
+Current active version: **alpha 0.01**  
+Plugin package version: `0.0.1-alpha.1`
 
-### Install BepInExPack_IL2CPP from Thunderstore
+## Repository Layout
 
-1. Navigate to https://thunderstore.io/c/sons-of-the-forest/p/BepInEx/BepInExPack_IL2CPP/
-2. Get the archive of the pack by clicking `Manual Download`
-3. Follow the instructions for `Manual Installation`
-    1. Extract the archive into a folder. Do not extract into the game folder.
-    2. Move the contents of the `BepInExPack` folder into the game folder (where the game executable is located).
-    3. Run the game.
-        - If you are on `Linux`, you must add the following to your Launch Options in Steam: `WINEDLLOVERRIDES="winhttp.dll=n,b" %command%`
-4. Follow the instructions for the specific `Release` version of the mod.
+- `src/3rdPersonCamFlip/` - active mod source.
+- `versions/alpha/0.01/` - snapshot of the old `ThirdPersonCamFix - 0.0.4` source, now treated as the first alpha prototype.
+- `versions/pre-alpha/` - predecessor snapshots from before alpha 0.01.
+- `libs/` - local BepInEx, Unity, and game assemblies used for compiling. This folder is ignored by git.
+- `bin/` - build output. This folder is ignored by git.
 
-### Where do I get your compiled mods and not their source?
-Get the mods you want from this repository's `releases` section: https://github.com/FatigueDev/aneurism_iv_modding/releases
+## Build
 
+Copy the required BepInEx, Unity, and game assemblies into `libs/`, then run:
 
-### How do I make my own mods?
+```powershell
+dotnet build .\src\3rdPersonCamFlip\3rdPersonCamFlip.csproj -c Release
+```
 
-1. Follow the instructions [above to install BepInEx](#install-bepinexpack_il2cpp-from-thunderstore)
-2. Clone the project by heading into a folder and calling `git clone https://github.com/FatigueDev/aneurism_iv_modding.git`
-3. Create a folder in the root of the cloned project named `libs`
-4. Copy core assemblies you may need from `ANEURISM IV/BepInEx/core/` to `aneurism_iv_modding/libs/`
-5. Copy interop assemblies you may need from `ANEURISM IV/BepInEx/interop/` to `aneurism_iv_modding/libs/`
-6. Change directory to `aneurism_iv_modding` root
-7. Run `dotnet build ./some_mod/some_mod.csproj` 
+The compiled mod will be written to:
 
-The `Directory.Build.props` file will read any `.dll` files that are in `aneurism_iv_modding/libs/` and projects built in the hierarchy will automatically use them as requirements.
+```text
+bin/3rdPersonCamFlip/3rdPersonCamFlip.dll
+```
 
-**Files currently in use are**:</br>
-0Harmony.dll</br>
-Il2Cppmscorlib.dll</br>
-Il2CppSystem.Drawing.dll</br>
-Il2CppSystem.Xml.Linq.dll</br>
-UnityEngine.InputLegacyModule.dll</br>
-Assembly-CSharp.dll</br>
-Il2CppSystem.Configuration.dll</br>
-Il2CppSystem.Globalization.dll</br>
-Mirror.dll</br>
-UnityEngine.InputModule.dll</br>
-BepInEx.Core.dll</br>
-Il2CppSystem.Core.dll</br>
-Il2CppSystem.Numerics.dll</br>
-UnityEngine.AssetBundleModule.dll</br>
-Unity.RenderPipelines.Core.Runtime.dll</br>
-BepInEx.Unity.IL2CPP.dll</br>
-Il2CppSystem.Data.dll</br>
-Il2CppSystem.Runtime.Serialization.dll</br>
-UnityEngine.CoreModule.dll</br>
-Il2CppInterop.Runtime.dll</br>
-Il2CppSystem.dll</br>
-Il2CppSystem.Xml.dll</br>
-UnityEngine.dll</br>
+`update_3rdpersoncamflip.ps1` builds the active project and copies the DLL into the local ANEURISM IV BepInEx plugins folder.
 
+## Version Archive
+
+The active project is the one under `src/3rdPersonCamFlip/`.
+
+Older source snapshots should stay under `versions/` using this convention:
+
+```text
+versions/
+  alpha/
+    0.01/
+  pre-alpha/
+    0.0.2/
+    0.0.3/
+    broken-1/
+    broken-2/
+```
+
+When making a new release, copy the active source into a new folder under `versions/alpha/` or a later release channel before continuing work.

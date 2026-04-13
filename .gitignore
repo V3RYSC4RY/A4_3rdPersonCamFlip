@@ -1,6 +1,10 @@
-bin
+bin/
+**/bin/
+**/obj/
 libs/*
-**/obj
+.vs/
+*.user
+*.suo
 
 # Temporarily remove assets until it is ready to go.
-assets
+assets/

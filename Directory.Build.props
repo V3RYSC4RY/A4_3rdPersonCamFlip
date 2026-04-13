@@ -30,8 +30,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- Reference all DLLs in the libs folder (relative path from each project) -->
-    <Reference Include="../libs/*.dll">
+    <!-- Reference all DLLs in the repo-level libs folder. -->
+    <Reference Include="$(MSBuildThisFileDirectory)libs\*.dll">
       <HintPath>%(Identity)</HintPath>
       <Private>false</Private>
     </Reference>
