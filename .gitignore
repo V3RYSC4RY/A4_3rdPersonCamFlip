@@ -9,6 +9,7 @@ libs/*
 # Local assistant/project context; do not publish.
 context.md
 .codex/
+update_3rdpersoncamflip.ps1
 
 # Temporarily remove assets until it is ready to go.
 assets/
