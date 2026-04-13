@@ -20,6 +20,22 @@ namespace ThirdPersonCamFlip
         // Used only if the live camera has no baked-in lateral offset to mirror.
         public static float FallbackShoulderOffset = 1f;
         public static float FallbackTrackedOffset  = 0.6f; // for CameraManager path when the game reports 0
+
+        public static void UseDefaultShoulder(bool snap = false)
+        {
+            TargetShoulderSign = 1f;
+            if (snap)
+                CurrentShoulderSign = TargetShoulderSign;
+        }
+
+        public static void UseSwappedShoulder(bool snap = false)
+        {
+            TargetShoulderSign = -1f;
+            if (snap)
+                CurrentShoulderSign = TargetShoulderSign;
+        }
+
+        public static bool IsSwapped => TargetShoulderSign < 0f;
     }
 
     public class CameraShoulderController : MonoBehaviour
@@ -134,9 +150,12 @@ namespace ThirdPersonCamFlip
                 return;
             }
 
-            // --- Shoulder toggle (configurable; defaults to C) ---
-            KeyCode swapKey = ThirdPersonCamFlipPlugin.SwapKey?.Value ?? KeyCode.C;
-            if (swapKey != KeyCode.None && Input.GetKeyDown(swapKey))
+            // --- Shoulder flip (configurable; defaults to C) ---
+            KeyCode camFlip = ThirdPersonCamFlipPlugin.CamFlip?.Value ?? KeyCode.C;
+            if (ThirdPersonCamFlipPlugin.Mode.Value == 1 &&
+                camFlip != KeyCode.None &&
+                Input.GetKeyDown(camFlip) &&
+                !UiInputFocus.IsTextInputActive())
             {
                 // Flip between default/right and left
                 _useRightShoulder = !_useRightShoulder;

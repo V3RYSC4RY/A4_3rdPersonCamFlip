@@ -14,12 +14,13 @@ namespace ThirdPersonCamFlip
     {
         public const string PluginGuid    = "com.veryscary.a4.3rdpersoncamflip";
         public const string PluginName    = "3rdPersonCamFlip";
-        public const string PluginVersion = "0.0.1-alpha.1";
-        public const string ReleaseName   = "alpha 0.01";
+        public const string PluginVersion = "0.0.2-alpha.1";
+        public const string ReleaseName   = "alpha 0.02";
 
         internal static ThirdPersonCamFlipPlugin Instance;
         internal static ConfigFile              CustomConfig;
-        internal static ConfigEntry<KeyCode>    SwapKey;
+        internal static ConfigEntry<KeyCode>    CamFlip;
+        internal static ConfigEntry<int>        Mode;
         internal static ManualLogSource         LogSource;
         internal static bool                    VerboseLogging;
         internal static Harmony                 HarmonyInstance;
@@ -36,7 +37,8 @@ namespace ThirdPersonCamFlip
             var verbose = CustomConfig.Bind("Logging", "Verbose", false, "Enable extra debug logs for troubleshooting.");
             VerboseLogging = verbose.Value;
 
-            SwapKey = CustomConfig.Bind("Input", "SwapKey", KeyCode.C, "Key used to swap the third-person camera shoulder.");
+            CamFlip = CustomConfig.Bind("Input", "CamFlip", KeyCode.C, "Key used to flip the third-person camera shoulder.");
+            Mode = CustomConfig.Bind("Input", "Mode", 1, "1 = separate CamFlip bind; 2 = add swapped shoulder as a third camera toggle state.");
 
             // Register IL2CPP MonoBehaviour
             ClassInjector.RegisterTypeInIl2Cpp<CameraShoulderController>();
@@ -47,7 +49,9 @@ namespace ThirdPersonCamFlip
             HarmonyInstance = new Harmony(PluginGuid);
             HarmonyInstance.PatchAll();
 
-            Log.LogInfo($"[3PCF] Loaded {ReleaseName} (IL2CPP type registered, Harmony patched, SwapKey={SwapKey.Value})");
+            ConsoleCommandListener.Start();
+
+            Log.LogInfo($"[3PCF] Loaded {ReleaseName} (IL2CPP type registered, Harmony patched, Mode={Mode.Value}, CamFlip={CamFlip.Value})");
         }
     }
 }
