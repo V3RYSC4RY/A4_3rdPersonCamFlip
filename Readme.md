@@ -1,7 +1,7 @@
 # 3rdPersonCamFlip
 
 ANEURISM IV BepInEx IL2CPP mod for flipping the third-person camera shoulder.
-Press the *SwapKey* while in third-person view to toggle the camera from left/right shoulder mode.
+<p>Press the *SwapKey* while in third-person view to toggle the camera from left/right shoulder mode.
 
 ### Default keybind: 
 SwapKey = **C**
