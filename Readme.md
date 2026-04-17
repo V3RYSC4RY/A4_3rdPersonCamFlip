@@ -83,20 +83,6 @@ Changing `CamFlip` saves the new value to `BepInEx/config/3rdPersonCamFlip.cfg`.
 CamFlip = C
 ```
 
-## Build
-
-Copy the required BepInEx, Unity, and game assemblies into `libs/`, then run:
-
-```powershell
-dotnet build .\src\3rdPersonCamFlip\3rdPersonCamFlip.csproj -c Release
-```
-
-The compiled mod will be written to:
-
-```text
-bin/3rdPersonCamFlip/3rdPersonCamFlip.dll
-```
-
 ## History
 
 - `src/3rdPersonCamFlip/` - active mod source.
