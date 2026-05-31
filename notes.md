@@ -1,6 +1,9 @@
 # 3rdPersonCamFlip Notes (chronological)
 
 - 2026-04-13: Renamed active mod to 3rdPersonCamFlip, moved active source to `src/3rdPersonCamFlip`, and organized old snapshots under `versions/`. The old 0.0.4 snapshot is now the first alpha prototype: alpha 0.01.
+- 2026-04-20: Added alpha 0.03 mode 3: mouse wheel left/right tilt selects left/right third-person shoulder orientation while in third person.
+- 2026-04-20: Renamed mode 3 to user-facing 3a, kept `camflip 3` as a 3a alias, and added alpha 0.04 mode 3b for wheel-tilt direct entry from first person.
+- 2026-05-31: Released alpha 0.05 with latest FPS test and camera behavior refinements.
 
 - 2025-12-07: Initial baseline: FramingTransposer X mirroring in CMBrain prefix; right untouched, left negated; collisions OK on right, weak on left.
 - 2025-12-07: Removed final camera transform offsets; avoided CameraManager trackedOffset writes (caused NRE/vertical shifts).

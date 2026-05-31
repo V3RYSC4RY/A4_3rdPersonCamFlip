@@ -7,15 +7,21 @@ namespace ThirdPersonCamFlip
 {
     internal static class UiInputFocus
     {
+        private const float ScanInterval = 0.25f;
+        private static float _nextScanTime;
+        private static bool _lastScanFoundFocusedInput;
+
         public static bool IsTextInputActive()
         {
             if (IsSelectedTextInput())
                 return true;
 
-            if (IsAnyTmpInputFocused())
-                return true;
+            if (Time.unscaledTime < _nextScanTime)
+                return _lastScanFoundFocusedInput;
 
-            return IsAnyLegacyInputFocused();
+            _nextScanTime = Time.unscaledTime + ScanInterval;
+            _lastScanFoundFocusedInput = IsAnyTmpInputFocused() || IsAnyLegacyInputFocused();
+            return _lastScanFoundFocusedInput;
         }
 
         private static bool IsSelectedTextInput()
