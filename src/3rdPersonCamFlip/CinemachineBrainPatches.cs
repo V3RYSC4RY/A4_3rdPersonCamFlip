@@ -12,6 +12,10 @@ namespace ThirdPersonCamFlip
         private static readonly Dictionary<int, float> OriginalFramingScreenX = new();
         private static readonly Dictionary<int, float> OriginalTransposerX    = new();
         private static readonly Dictionary<int, float> OriginalShoulderX      = new();
+        private const int MaxRememberedComponents = 64;
+        private static int _lastSyncedManagerId;
+        private static float _lastSyncedTargetOffset = float.NaN;
+        private static float _nextErrorLog;
         private static bool Verbose => ThirdPersonCamFlipPlugin.VerboseLogging;
 
         /// <summary>
@@ -37,7 +41,46 @@ namespace ThirdPersonCamFlip
             }
             catch (System.Exception ex)
             {
-                ThirdPersonCamFlipPlugin.LogSource?.LogError("[3PCF] (PATCH) Failed to apply shoulder offset: " + ex);
+                LogPatchError(ex);
+            }
+        }
+
+        public static void ClearCachedState()
+        {
+            OriginalFramingX.Clear();
+            OriginalFramingScreenX.Clear();
+            OriginalTransposerX.Clear();
+            OriginalShoulderX.Clear();
+            _lastSyncedManagerId = 0;
+            _lastSyncedTargetOffset = float.NaN;
+        }
+
+        public static bool IsDefaultShoulderVisuallyRight()
+        {
+            const float centerTolerance = 0.01f;
+
+            try
+            {
+                var mgr = CameraManager.Instance;
+                var framing = mgr?.framing;
+                if (framing == null)
+                    return true;
+
+                int id = framing.GetInstanceID();
+                float baseSX = OriginalFramingScreenX.TryGetValue(id, out float remembered)
+                    ? remembered
+                    : framing.m_ScreenX;
+
+                if (Mathf.Abs(baseSX - 0.5f) <= centerTolerance)
+                    return true;
+
+                // With Cinemachine Framing Transposer, a target framed left of center means the camera is
+                // over the visual right shoulder; mirrored framing is the visual left shoulder.
+                return baseSX < 0.5f;
+            }
+            catch
+            {
+                return true;
             }
         }
 
@@ -92,7 +135,9 @@ namespace ThirdPersonCamFlip
                 changed = true;
             }
 
-            TrySyncTargetOffset(mgr, desiredX);
+            if (changed || NeedsTargetOffsetSync(mgr, desiredX))
+                TrySyncTargetOffset(mgr, desiredX);
+
             LogOffsets(baseX, framing.m_TrackedObjectOffset.x, desiredX, baseSX, framing.m_ScreenX, desiredSX, clamped);
 
             return changed;
@@ -100,14 +145,46 @@ namespace ThirdPersonCamFlip
 
         private static float _nextLog = 0f;
 
+        private static bool NeedsTargetOffsetSync(CameraManager mgr, float value)
+        {
+            int id = mgr.GetInstanceID();
+            if (id != _lastSyncedManagerId || Mathf.Abs(_lastSyncedTargetOffset - value) > 0.0001f)
+                return true;
+
+            try
+            {
+                return Mathf.Abs(mgr.targetTrackedOffset - value) > 0.0001f;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         private static void TrySyncTargetOffset(CameraManager mgr, float value)
         {
             try
             {
                 mgr.targetTrackedOffset = value;
                 mgr.UpdateTrackedObjectOffset();
+                _lastSyncedManagerId = mgr.GetInstanceID();
+                _lastSyncedTargetOffset = value;
             }
             catch { /* ignore */ }
+        }
+
+        private static void LogPatchError(System.Exception ex)
+        {
+            if (ThirdPersonCamFlipPlugin.LogSource == null)
+                return;
+
+            float t = Time.unscaledTime;
+            const float interval = 5f;
+            if (t < _nextErrorLog)
+                return;
+
+            _nextErrorLog = t + interval;
+            ThirdPersonCamFlipPlugin.LogSource.LogWarning("[3PCF] (PATCH) Failed to apply shoulder offset: " + ex.Message);
         }
 
         private static void LogOffsets(float baseX, float currentX, float desiredX, float baseSX, float currentSX, float desiredSX, float clamped)
@@ -186,6 +263,9 @@ namespace ThirdPersonCamFlip
         {
             if (!store.TryGetValue(id, out var original))
             {
+                if (store.Count >= MaxRememberedComponents)
+                    store.Clear();
+
                 original   = current;
                 store[id]  = original;
             }

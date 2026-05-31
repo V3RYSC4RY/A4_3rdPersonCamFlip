@@ -9,6 +9,12 @@ namespace ThirdPersonCamFlip
     internal static class PlayerCameraControllerPatches
     {
         private static readonly Dictionary<int, Vector3> OriginalFollowLocalPos = new();
+        private const int MaxRememberedFollowPoints = 64;
+
+        public static void ClearCachedState()
+        {
+            OriginalFollowLocalPos.Clear();
+        }
 
         [HarmonyPostfix]
         [HarmonyPatch("UpdateCamera")]
@@ -25,7 +31,12 @@ namespace ThirdPersonCamFlip
 
             // Capture original local position once.
             if (!OriginalFollowLocalPos.ContainsKey(id))
+            {
+                if (OriginalFollowLocalPos.Count >= MaxRememberedFollowPoints)
+                    OriginalFollowLocalPos.Clear();
+
                 OriginalFollowLocalPos[id] = follow.localPosition;
+            }
 
             var orig = OriginalFollowLocalPos[id];
 
@@ -37,8 +48,8 @@ namespace ThirdPersonCamFlip
                 return;
             }
 
-            // On left, shift along local X by a smoothed factor (uses CurrentShoulderSign lerp).
-            float factor = Mathf.Clamp01(-ShoulderState.CurrentShoulderSign); // 0 on right (+1), 1 on full left (-1)
+            // On the mirrored fallback side, shift along local X by a smoothed factor.
+            float factor = Mathf.Clamp01(-ShoulderState.CurrentShoulderSign); // 0 on default (+1), 1 on alternate (-1)
             float shift = Mathf.Abs(ShoulderState.FallbackShoulderOffset) * factor;
             Vector3 newPos = orig;
             newPos.x = orig.x - shift;

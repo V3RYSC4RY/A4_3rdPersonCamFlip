@@ -2,15 +2,15 @@
 
 ## Version
 
-Current active version: **alpha 0.02**
+Current active version: **alpha 0.05**
 
-Plugin package version: `0.0.2-alpha.1`
+Plugin package version: `0.0.4-alpha.1`
 
 ## Description
 
 3rdPersonCamFlip is a BepInEx IL2CPP mod for ANEURISM IV that adds shoulder camera control while using third-person view.
 
-The mod can either bind shoulder swapping to a dedicated key or extend the game's normal camera toggle sequence with an additional third-person shoulder state.
+The mod can bind shoulder swapping to a dedicated key, extend the game's normal camera toggle sequence with an additional third-person shoulder state, or use mouse wheel left/right tilt as explicit shoulder orientation inputs.
 
 ## Modes
 
@@ -36,6 +36,33 @@ In this mode, the camera flow becomes:
 First person -> Third person default -> Third person alternate -> First person
 ```
 
+### Mode 3a: Mouse wheel tilt orientation
+
+Mode 3a keeps the game's default camera toggle behavior and uses mouse wheel tilt to choose the shoulder side while already in third person.
+
+`camflip 3` is an alias for `camflip 3a`.
+
+In this mode:
+
+```text
+Mouse wheel left tilt -> Third person left shoulder
+Mouse wheel right tilt -> Third person right/default shoulder
+```
+
+### Mode 3b: Mouse wheel tilt entry
+
+Mode 3b keeps middle mouse as the normal camera toggle and also lets mouse wheel tilt enter third person directly from first person with the requested shoulder side.
+
+In this mode:
+
+```text
+First person + mouse wheel left tilt -> Third person left shoulder
+First person + mouse wheel right tilt -> Third person right/default shoulder
+Third person + mouse wheel left tilt -> Third person left shoulder
+Third person + mouse wheel right tilt -> Third person right/default shoulder
+Middle mouse -> Normal camera toggle
+```
+
 ## Commands
 
 The in-game console accepts:
@@ -45,7 +72,12 @@ camflip
 camflip help
 camflip 1
 camflip 2
+camflip 3
+camflip 3a
+camflip 3b
 camflip bind <KeyCode>
+camflip invertwheel on
+camflip invertwheel off
 ```
 
 When the BepInEx console is enabled, the mod also accepts:
@@ -55,7 +87,12 @@ When the BepInEx console is enabled, the mod also accepts:
 3pcf camflip help
 3pcf camflip 1
 3pcf camflip 2
+3pcf camflip 3
+3pcf camflip 3a
+3pcf camflip 3b
 3pcf camflip bind <KeyCode>
+3pcf camflip invertwheel on
+3pcf camflip invertwheel off
 3pcf help
 ```
 
@@ -65,7 +102,12 @@ Command behavior:
 - `camflip help` shows command usage.
 - `camflip 1` switches to Mode 1.
 - `camflip 2` switches to Mode 2.
+- `camflip 3` switches to Mode 3a.
+- `camflip 3a` switches to Mode 3a.
+- `camflip 3b` switches to Mode 3b.
 - `camflip bind <KeyCode>` changes the Mode 1 shoulder swap key.
+- `camflip invertwheel on` reverses mouse wheel left/right tilt shoulder selection.
+- `camflip invertwheel off` uses the default mouse wheel left/right tilt shoulder selection.
 
 Examples:
 
@@ -76,6 +118,8 @@ camflip bind None
 ```
 
 Changing `CamFlip` saves the new value to `BepInEx/config/3rdPersonCamFlip.cfg`.
+
+Changing `InvertWheelTilt` also saves to `BepInEx/config/3rdPersonCamFlip.cfg`.
 
 ## Default Keybind
 
