@@ -50,12 +50,12 @@ namespace ThirdPersonCamFlip
 
         public static string Usage()
         {
-            return "Usage: camflip 1 | camflip 2 | camflip 3 | camflip 3a | camflip 3b | camflip bind <KeyCode> | camflip invertwheel on|off";
+            return "Usage: camflip 1 | camflip 2 | camflip 3 | camflip 3a | camflip 4 | camflip 3b | camflip bind <KeyCode> | camflip invertwheel on|off";
         }
 
         public static string Help()
         {
-            return "Commands:\ncamflip\ncamflip help\ncamflip 1\ncamflip 2\ncamflip 3\ncamflip 3a\ncamflip 3b\ncamflip bind <KeyCode>\ncamflip invertwheel on\ncamflip invertwheel off";
+            return "Commands:\ncamflip\ncamflip help\ncamflip 1\ncamflip 2\ncamflip 3\ncamflip 3a\ncamflip 4\ncamflip 3b\ncamflip bind <KeyCode>\ncamflip invertwheel on\ncamflip invertwheel off";
         }
 
         public static string SetMode(string modeName)
@@ -150,7 +150,7 @@ namespace ThirdPersonCamFlip
                 return true;
             }
 
-            if (Is(modeName, "3b"))
+            if (Is(modeName, "4") || Is(modeName, "3b"))
             {
                 mode = Mode3B;
                 return true;

@@ -36,11 +36,9 @@ In this mode, the camera flow becomes:
 First person -> Third person default -> Third person alternate -> First person
 ```
 
-### Mode 3a: Mouse wheel tilt orientation
+### Mode 3: Mouse wheel tilt orientation
 
-Mode 3a keeps the game's default camera toggle behavior and uses mouse wheel tilt to choose the shoulder side while already in third person.
-
-`camflip 3` is an alias for `camflip 3a`.
+Mode 3 keeps the game's default camera toggle behavior and uses mouse wheel tilt to choose the shoulder side while already in third person.
 
 In this mode:
 
@@ -49,9 +47,9 @@ Mouse wheel left tilt -> Third person left shoulder
 Mouse wheel right tilt -> Third person right/default shoulder
 ```
 
-### Mode 3b: Mouse wheel tilt entry
+### Mode 4: Mouse wheel tilt entry
 
-Mode 3b keeps middle mouse as the normal camera toggle and also lets mouse wheel tilt enter third person directly from first person with the requested shoulder side.
+Mode 4 keeps middle mouse as the normal camera toggle and also lets mouse wheel tilt enter third person directly from first person with the requested shoulder side.
 
 In this mode:
 
@@ -73,8 +71,7 @@ camflip help
 camflip 1
 camflip 2
 camflip 3
-camflip 3a
-camflip 3b
+camflip 4
 camflip bind <KeyCode>
 camflip invertwheel on
 camflip invertwheel off
@@ -88,8 +85,7 @@ When the BepInEx console is enabled, the mod also accepts:
 3pcf camflip 1
 3pcf camflip 2
 3pcf camflip 3
-3pcf camflip 3a
-3pcf camflip 3b
+3pcf camflip 4
 3pcf camflip bind <KeyCode>
 3pcf camflip invertwheel on
 3pcf camflip invertwheel off
@@ -102,9 +98,8 @@ Command behavior:
 - `camflip help` shows command usage.
 - `camflip 1` switches to Mode 1.
 - `camflip 2` switches to Mode 2.
-- `camflip 3` switches to Mode 3a.
-- `camflip 3a` switches to Mode 3a.
-- `camflip 3b` switches to Mode 3b.
+- `camflip 3` switches to Mode 3.
+- `camflip 4` switches to Mode 4.
 - `camflip bind <KeyCode>` changes the Mode 1 shoulder swap key.
 - `camflip invertwheel on` reverses mouse wheel left/right tilt shoulder selection.
 - `camflip invertwheel off` uses the default mouse wheel left/right tilt shoulder selection.
