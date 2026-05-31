@@ -50,12 +50,12 @@ namespace ThirdPersonCamFlip
 
         public static string Usage()
         {
-            return "Usage: camflip 1 | camflip 2 | camflip 3 | camflip 3a | camflip 4 | camflip 3b | camflip bind <KeyCode> | camflip invertwheel on|off";
+            return "Usage: camflip 1 | camflip 2 | camflip 3 | camflip 4 | camflip bind <KeyCode> | camflip invertwheel on|off";
         }
 
         public static string Help()
         {
-            return "Commands:\ncamflip\ncamflip help\ncamflip 1\ncamflip 2\ncamflip 3\ncamflip 3a\ncamflip 4\ncamflip 3b\ncamflip bind <KeyCode>\ncamflip invertwheel on\ncamflip invertwheel off";
+            return "Commands:\ncamflip\ncamflip help\ncamflip 1\ncamflip 2\ncamflip 3\ncamflip 4\ncamflip bind <KeyCode>\ncamflip invertwheel on\ncamflip invertwheel off";
         }
 
         public static string SetMode(string modeName)
@@ -76,9 +76,9 @@ namespace ThirdPersonCamFlip
             }
 
             if (mode == Mode3A)
-                return "CamFlip mode set to 3a. Mouse wheel tilt selects left/right shoulder while already in third person.";
+                return "CamFlip mode set to 3. Mouse wheel tilt selects left/right shoulder while already in third person.";
 
-            return "CamFlip mode set to 3b. Mouse wheel tilt enters third person from first person and selects that shoulder; middle mouse still toggles normally.";
+            return "CamFlip mode set to 4. Mouse wheel tilt enters third person from first person and selects that shoulder; middle mouse still toggles normally.";
         }
 
         public static string Bind(string keyName)
@@ -162,10 +162,10 @@ namespace ThirdPersonCamFlip
         private static string FormatMode(int mode)
         {
             if (mode == Mode3A)
-                return "3a";
+                return "3";
 
             if (mode == Mode3B)
-                return "3b";
+                return "4";
 
             return mode.ToString();
         }
